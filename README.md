@@ -57,7 +57,7 @@ This plays the Glass system sound when Claude finishes processing. [Official Doc
 **Tool Recommendations:**
 
 - **Free:** [ChatGPT Desktop app](https://openai.com/chatgpt/desktop/) (Nicholas's tip)
-- **Freemium:** [SuperWhisper](https://superwhisper.com/)
+- **Freemium:** [SuperWhisper](https://superwhisper.com/), what I am using, free local version works well
 
 **Why It Works:**
 
@@ -69,10 +69,40 @@ This plays the Glass system sound when Claude finishes processing. [Official Doc
 **Personal Use Cases:**
 
 - **Note-taking and brainstorming**, I've spend around 3 hours talking about this content to an LLM to generate the content notes
-- Situations where your output/thinking is the main focus
-- Less useful for pure coding, more for planning and ideation
+- Situations where my output/thinking is the main focus
+- Less useful for pure coding, more for planning and ideation, explaining features, requirements
 
 > [!TIP]
 > You will be judged by others for talking to AI. Accept it :thumbsup:
 
 ---
+
+### Tip 4: Create slash commands for repetitive tasks
+
+**Think of it as:** Reusable prompts that you can trigger with `/command-name` in the chat with CC.
+
+Executed in the same context as the current conversation.
+
+**Use case 1:** (Git commit slash command)[./prompts/commit.md]
+Since LLMs will be writing your commit messages, it makes sense to ensure they provide as much useful context as possible for future reference.
+
+**How it Works:**
+
+1. **Project-level:** Create `.claude/commands/commit.md` in your current project
+   **OR**
+   **User-level:** Create `~/.claude/commands/commit.md` for all projects
+
+2. Define the structured process you want Claude to follow in the markdown file
+
+3. **Restart Claude Code** to make the new command available
+
+4. Use `/commit` instead of typing the same instructions repeatedly
+
+_Source for the prompt_: [HumanLayer's commit command](https://github.com/humanlayer/humanlayer/blob/main/.claude/commands/commit.md)  
+_Documentation_: [Claude Code slash commands](https://docs.anthropic.com/en/docs/claude-code/slash-commands)
+
+_Note_: You can customize slash commands by providing metadata in the prompt, I do that only if needed, this let's me migrate away from CC if better tool shows up.
+
+# Tips/ techniques I haven't found that useful
+
+- git worktrees (I feel I need more time mastering one execution flow before going bombastic on the same branch with different but similar tasks)
