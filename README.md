@@ -22,6 +22,8 @@ Claude Code defaults to asking for permission. Opposed to OpenCode, which operat
 > [!WARNING]
 > Never use `--dangerously-bypass-permissions` if you care about what you're exposing. NEVER give it access to production databases or sensitive systems.
 
+---
+
 ### Tip 2: Use "Stop" event hook to get a notification when Claude Code finishes execution
 
 MacOS hook configuration in `~/.claude/settings.json`:
@@ -44,6 +46,6 @@ MacOS hook configuration in `~/.claude/settings.json`:
 This plays the Glass system sound when Claude finishes processing. [Official Docs to Hooks](https://docs.anthropic.com/en/docs/claude-code/hooks)
 
 > [!TIP]
-> The "Glass.aiff" sound is superior to other system sounds on MacOS. Prove me wrong.
+> The "Glass.aiff" sound is **superior** to other system sounds on MacOS. Prove me wrong.
 
 ---
