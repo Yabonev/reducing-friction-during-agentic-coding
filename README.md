@@ -263,7 +263,8 @@ _Note_: You can customize slash commands by providing metadata in the prompt, I 
 
 **The Concept:** Create specialized commands that work together - the output of one becomes the input of another.
 
-> [!TIP] > **Principle:** Specialized commands should work together - the output of one should be the input of another when that makes sense.
+> [!TIP]
+> **Principle:** Specialized commands should work together - the output of one should be the input of another when that makes sense.
 
 **Example:**
 
@@ -321,7 +322,8 @@ You are a [specific role with clear expertise area].
 
 ### Tip 7: Provide the right context given the available tools
 
-> [!TIP] > **Principle:** When providing context, format it so the LLM can use its available tools to one-shot access that exact context.
+> [!TIP]
+> **Principle:** When providing context, format it so the LLM can use its available tools to one-shot access that exact context.
 
 **Examples:**
 
