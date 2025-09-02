@@ -257,6 +257,109 @@ _Documentation_: [Claude Code slash commands](https://docs.anthropic.com/en/docs
 
 _Note_: You can customize slash commands by providing metadata in the prompt, I do that only if needed, this let's me migrate away from CC if better tool shows up.
 
+---
+
+### Tip 5: Chain slash commands and subagents for complex workflows
+
+**The Concept:** Create specialized commands that work together - the output of one becomes the input of another.
+
+> [!SUCCESS] > **Principle:** Specialized commands should work together - the output of one should be the input of another when that makes sense.
+
+**Example:**
+
+1. `/research` → gathers information about a topic with a specific output template
+2. `/analyze` → takes the specific research output and extracts key insights because it has specific instructions how to handle this template
+
+---
+
+### Tip 6: Use precise verbs with examples when creating commands
+
+**Command Creation Template:**
+
+```markdown
+# [Command Name]
+
+## Persona
+
+You are a [specific role with clear expertise area].
+
+## Task
+
+[Single, clear objective - avoid compound tasks]
+
+## Process
+
+1. **[Specific Verb]:** [What this verb means] (e.g., "[concrete example]")
+2. **[Another Verb]:** [What this verb means] (e.g., "[concrete example]")
+3. **[Final Verb]:** [What this verb means] (e.g., "[concrete example]")
+
+## Output Format
+
+[Exact structure expected]
+
+## Constraints
+
+- [Specific limitation]
+- [Another limitation]
+- [Performance/quality requirement]
+
+## Examples
+
+**Input:** [Sample input]
+**Expected Output:** [Sample output]
+```
+
+**Verb Precision Examples:**
+
+- ❌ "Track files"
+- ✅ "List all files that were read, modified, or created (e.g., `auth.py` was modified, `config.json` was read)"
+
+- ❌ "Capture insights"
+- ✅ "Record key discoveries with specific details (e.g., 'performance bottleneck in user lookup query at line 45')"
+
+---
+
+### Tip 7: Provide the right context given the available tools
+
+> [!SUCCESS] > **Principle:** When providing context, format it so the LLM can use its available tools to one-shot access that exact context.
+
+**Examples:**
+
+❌ **Bad:** "The authentication logic in `auth.py` handles user validation"
+
+✅ **Good:** "The authentication logic in `auth.py:45-52` validates users:
+
+````python
+def validate_user(username, password):
+    user = User.query.filter_by(username=username).first()
+    if user and user.check_password(password):
+        return user
+    return None
+```"
+
+❌ **Bad:** "Error handling in `api/handlers.py` catches validation errors"
+
+✅ **Good:** "Error handling in `api/handlers.py:123-130` catches validation errors:
+```python
+try:
+    result = process_request(data)
+except ValidationError as e:
+    return jsonify({'error': str(e)}), 400
+```
+
+**Context Engineering Patterns:**
+
+- **File References:** `auth.py:45-52` (Read tool can access exact lines)
+- **Function References:** `validateUser()` in `src/auth/handlers.py` (Grep tool can find immediately)
+- **Error Messages:** `"ValidationError: Invalid password format"` (Grep can locate exact occurrence)
+- **URL Paths:** `/api/v1/users/login` (Grep can find route definitions)
+- **Repeatition leads to attention**: Reading code snippet and then finding that same code in the file system strengthens the focus on those specific parts of the code.
+
+> [!TIP]
+> Repetition is good, when you repeat the correct thing.
+
+
 # Tips/ techniques I haven't found that useful
 
 - git worktrees (I feel I need more time mastering one execution flow before going bombastic on the same branch with different but similar tasks)
+````
