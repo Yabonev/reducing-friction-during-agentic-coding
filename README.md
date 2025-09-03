@@ -2,6 +2,15 @@
 
 Examples and demos for the "Reducing Friction During Agentic Coding" presentation.
 
+## Assumptions
+
+These tips assume:
+
+- **Learning-focused:** You're building for exploration and learning, not mission-critical systems
+- **Solo development:** Working alone, not in a team environment
+- **Experimental freedom:** Goal is understanding technology while building what interests you
+- **Adaptable principles:** If working in teams or production, these techniques need adaptation
+
 ## Claude Code Configuration
 
 Claude Code uses a `.claude/` folder for configuration:
