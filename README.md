@@ -271,6 +271,9 @@ _Note_: You can customize slash commands by providing metadata in the prompt, I 
 1. `/research` → gathers information about a topic with a specific output template
 2. `/analyze` → takes the specific research output and extracts key insights because it has specific instructions how to handle this template
 
+> [!TIP]
+> Prefer building intuition by creating your own customized workflow rather than copying already done workflow, long term it's about learning the about prompt engineering, context engineering and all the other fancy terms, that's what will make you stand out.
+
 ---
 
 ### Tip 6: Use precise verbs with examples when creating commands
@@ -616,7 +619,33 @@ Configure in `~/.claude/settings.json`:
 > [!TIP]
 > Keep reminders concise and actionable. Too many rules dilute focus, leading to the same hallucinations as if the reminder is not there. If you need more rules, better try to think of a solution that provider a dynamic reminder based on the context.
 
+### Tip 15: Use CLAUDE.md files
+
+By default the `CLAUDE.md` is always sent with each message, best used to provide context of the project goals and folder structure.
+
+If you're a beginner, use the `/init` command to generate `CLAUDE.md` file, if you're commiting regularly to the codebase, delete the `CLAUDE.md` and run `/init`. Don't bother with anything else.
+
+> [!TIP]
+> Trust the `/init` slash command from Anthropic's prompt writers.
+
+I'd also recommend keeping the user level `CLAUDE.md` empty in the beginning if you're not specifically focused and experimenting with it, it can be quite easy to forget it and just push tokens that will defocus the LLM.
+
+> [!TIP]
+> Repeat system reminders in CLAUDE.md with different wording to increase changes of instruction following and reduce hallucinations. Aim to provide clear, easy-to-follow, non-conflicting instructions. If there are conflicting instructions provide priority
+
+- Repetition with different wording increases changes of instruction following
+- CLAUDE.md takes higher priority than normal tokens and is always attached
+- System reminders get send last so they get higher attention due to recency
+
 ---
+
+# Examples
+
+## Using hooks to log conversations
+
+## Telegram bot
+
+## python apis for force alignment and sfx generation
 
 # Tips/ techniques I haven't found that useful
 
