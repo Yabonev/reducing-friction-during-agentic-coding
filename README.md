@@ -637,6 +637,11 @@ I'd also recommend keeping the user level `CLAUDE.md` empty in the beginning if 
 - CLAUDE.md takes higher priority than normal tokens and is always attached
 - System reminders get send last so they get higher attention due to recency
 
+### Tip 16: Use background bash commands for continuous feedback
+
+Ask the LLM to use background bash to run your python api, react frontend etc.
+If there is an error, tell it to "Read the bash output for the frontend and check for errors"
+
 ---
 
 # Examples
