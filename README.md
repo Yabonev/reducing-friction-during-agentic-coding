@@ -566,6 +566,62 @@ To generate a response, the LLM tracks relationships between every token pair. A
 >
 > CC: You're absolutely right. I should have waited for your confirmation after presenting the commit plan.
 
+### Tip 14: Use system reminders to increase chances of instruction following and reduce hallucinations
+
+**The Problem:** LLMs forget instructions as context grows. Important rules get buried under conversation history.
+
+**The Solution:** Inject system reminders after every user prompt using the `UserPromptSubmit` hook. These reminders appear as high-priority because the model is recency bias, focusing on the latest tokens more than previous ones.
+
+**Example: Step-back analysis reminder**
+Used to decrease the changes of hallucinations by forcing the model to output in the direction of "ARE YOU SURE ABOUT THAT?"
+
+Create `~/.claude/hooks/inject_reminder.sh`:
+
+```bash
+#!/bin/bash
+
+# User-level hook to inject rule reminders after each user prompt
+# This helps Claude remember to follow user-defined rules
+
+# Single reminder message for step-back analysis
+reminder="<system-reminder>
+STEP-BACK ANALYSIS REQUIRED: Before claiming functionality works:
+1. HIGH-LEVEL QUESTION: \"What evidence do I have that this actually works?\"
+2. EVIDENCE ASSESSMENT: List concrete observations vs assumptions
+3. VERIFICATION STATUS: \"Confirmed by [method]\" or \"Requires verification\"
+4. CLAIM CALIBRATION: Adjust statements to match evidence level
+5. TOOL VERIFICATION: Use available tools, MCP servers, or direct testing to verify claims when possible
+This prevents assumption cascade errors. Apply before every functional claim.
+</system-reminder>"
+
+# Output the reminder to stdout (this will be seen by Claude)
+echo "$reminder"
+
+exit 0
+```
+
+Configure in `~/.claude/settings.json`:
+
+```json
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/hooks/inject_reminder.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+> [!TIP]
+> Keep reminders concise and actionable. Too many rules dilute focus, leading to the same hallucinations as if the reminder is not there. If you need more rules, better try to think of a solution that provider a dynamic reminder based on the context.
+
 ---
 
 # Tips/ techniques I haven't found that useful
@@ -575,3 +631,17 @@ To generate a response, the LLM tracks relationships between every token pair. A
 ```
 
 ```
+
+# Links
+
+https://youtu.be/i0P56Pm1Q3U?si=ja8e_JOm0JDyw47l - CC system prompt shown
+
+https://pydevtools.com/blog/interceptors/ uv python interceptor
+
+https://jalammar.github.io/illustrated-transformer/ illustrated explanations on how the transformer architecture works, essentially how LLMs generate their responses. The same author has multiple "illustrated" tutorial, also for stable diffusion for image generation. There's also a 1.5h free course
+
+https://www.youtube.com/watch?v=IS_y40zY-hc - A good talk that digs deeper into the workflow of a few engineers' startup that does a huge amount of code generation, they talk about how they work, the prompts they use are available in the repo, it covers the topic of compacting context, a part of my talk will be about this, as I find it extremely important. They also cover how the do PR reviews (focusing on research and planning documents instead of code, really interesting ideas)
+
+https://www.youtube.com/watch?v=42AzKZRNhsk - the same topic, from the same people, but more in-depth
+
+https://github.com/humanlayer/humanlayer/tree/main/.claude - their system prompts (worth studying)
