@@ -18,13 +18,7 @@ Claude Code uses a `.claude/` folder for configuration:
 - **Commands:** `./.claude/commands/` - custom slash commands
 - **Agents:** `./.claude/agents/` - specialized task agents
 
-Key settings: hooks, permissions, model preferences.
-
 ---
-
-## PART I: Reducing Friction User to LLM
-
-This section is about how you can provide more context, better context, faster by having tighter feedback loops between you and CC.
 
 ### Tip 1: Give tool calls permission by default
 
