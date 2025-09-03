@@ -1,0 +1,23 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  quality-checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Random quality check
+        run: |
+          echo "Running quality checks..."
+          # 50% chance of failure to demonstrate blocking
+          if [ $((RANDOM % 2)) -eq 0 ]; then
+            echo "❌ Quality check failed"
+            exit 1
+          else
+            echo "✅ Quality check passed"
+          fi

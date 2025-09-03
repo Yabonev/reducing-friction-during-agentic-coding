@@ -426,9 +426,7 @@ $ python main.py
 
 $ uv run main.py
 ✅ Running main.py with uv...
-```
-
-<!-- Test commit for branch protection verification -->bash
+```bash
 $ pip install -r requirements.txt
 ❌ Direct pip usage detected!
 🤖 AI Agent Instructions: Instead of 'pip install -r requirements.txt', use: uv pip sync requirements.txt
@@ -443,10 +441,7 @@ $ uv pip sync requirements.txt
 
 **The Principle:** Instead of instructing "always run tests and linting before committing", configure your repository to automatically enforce these checks.
 
-**Implementation:**
-
-**1. Block direct pushes to main:**
-
+**Enable branch protection:**
 ```bash
 echo '{
   "required_status_checks": {
@@ -463,14 +458,44 @@ echo '{
   --input -
 ```
 
-**2. CI Pipeline that runs automatically:**
+**Test the blocking:**
+```bash
+git commit -m "Test commit"
+git push origin main
+```
+```
+remote: error: GH006: Protected branch update failed for refs/heads/main.        
+remote: - Changes must be made through a pull request.
+error: failed to push some refs
+```
 
+**Remove protection (if needed):**
+```bash
+gh api repos/:owner/:repo/branches/main/protection --method DELETE
+```
+
+**CI Pipeline:**
 ```yaml
-# .github/workflows/ci.yml
-- Run tests
-- Run linting (eslint, ruff, etc.)
-- Run security checks
-- Run type checking
+# .github/workflows/ci.yml  
+name: CI
+on:
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  quality-checks:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Random quality check
+      run: |
+        # 50% chance of failure to demo blocking
+        if [ $((RANDOM % 2)) -eq 0 ]; then
+          echo "❌ Quality check failed"
+          exit 1
+        else
+          echo "✅ Quality check passed"
+        fi
 ```
 
 > [!TIP]
@@ -483,5 +508,3 @@ echo '{
 - git worktrees (I feel I need more time mastering one execution flow before going bombastic on the same branch with different but similar tasks)
 
 ```
-
-<!-- Test commit for branch protection verification -->
