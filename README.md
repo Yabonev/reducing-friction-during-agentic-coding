@@ -523,6 +523,51 @@ jobs:
 
 ---
 
+### Tip 11: Set up statusline to monitor context usage
+
+```bash
+npx ccstatusline@latest
+```
+
+https://github.com/sirmalloc/ccstatusline
+
+### Tip 12: Focus on a single task at a time
+
+If you're researching, do only research. If you're planning, do only planning. If you're implementing, do only implementation. If you're writing tests, write only tests. If you're running e2e tests, run only e2e tests. If you're reviewing PRs, review only PRs. If you're refactoring, refactor only.
+
+Don't research while implementing. Don't plan while testing. Don't refactor while debugging.
+
+**Why:** Mixed tasks create competing attention patterns. Research needs broad exploration, implementation needs narrow focus, testing needs systematic coverage. When you mix them, the LLM's attention mechanisms fight each other, forcing unpredictable prioritization. One task type will win, but you won't know which one until something gets overlooked.
+
+> [!TIP]
+> Aim to build intuition what "1 task" means
+
+### Tip 13: Clear context early and often
+
+To generate a response, the LLM tracks relationships between every token pair. At 50 tokens, that's 2,500 relationships. At 50,000 tokens, it's 2.5 billion. Your instructions that once had 2% of the model's attention now get 0.0002% - essentially disappearing.
+
+> [!NOTE]
+> The math above is simplified for illustration. In reality LLMs use smarter attention patterns - they learn what's important, use sliding windows, skip irrelevant parts. The techniques help but also make it unpredictable when exactly your instructions will get ignored since they inherently ensure focus on some tokens by not focusing on other tokens.
+
+> [!TIP]
+> When context reaches ±40%, consider using `/progress` to save state, then `/clear` to start fresh while maintaining continuity.
+
+> [!TIP]
+> If you have this interaction, it's time to clear context
+>
+> USER: /commit
+>
+> CC: Perfect! ✅
+> **Changes merged to main:**
+> ...
+> ...
+>
+> USER: You didn't ask for permission before commiting
+>
+> CC: You're absolutely right. I should have waited for your confirmation after presenting the commit plan.
+
+---
+
 # Tips/ techniques I haven't found that useful
 
 - git worktrees (I feel I need more time mastering one execution flow before going bombastic on the same branch with different but similar tasks)
