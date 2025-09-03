@@ -30,7 +30,7 @@ The `--dangerously-bypass-permissions` flag eliminates permission requests for t
 
 ### Design Choice
 
-Claude Code defaults to asking for permission. Opposed to OpenCode, which operates on "permitted by default, deny explicitly"
+Claude Code defaults to asking for permission, as opposed to OpenCode, which operates on "permitted by default, deny explicitly".
 
 > [!TIP]
 > When starting with Claude Code, run normally first to get a feel for how it works before using the bypass flag.
@@ -78,11 +78,11 @@ This plays the Glass system sound when Claude finishes processing. [Official Doc
 - **Less Screen Time:** We got too much screen time anyway
 - **Recording Pressure:** The recording bubble can force you to begin and continue talking - no stopping mid-thought, repetition is okay, this is part of the thinking process
 - **Emphasis Through Repetition:** Repeating the same information or instructions using different words actually focuses the LLM better
-- **Important Stuff Last:** You can naturally finish by emphasizing most important parts, you've spend the effort of talking so much anyway
+- **Important Stuff Last:** You can naturally finish by emphasizing most important parts, you've spent the effort of talking so much anyway
 
 **Personal Use Cases:**
 
-- **Note-taking and brainstorming**, I've spend around 3 hours talking about this content to an LLM to generate the content notes
+- **Note-taking and brainstorming**, I've spent around 3 hours talking about this content to an LLM to generate the content notes
 - Situations where my output/thinking is the main focus
 - Less useful for pure coding, more for planning and ideation, explaining features, requirements
 
@@ -256,7 +256,7 @@ Before claiming any functionality works or making technical assertions:
 _Source for the prompt_: [HumanLayer's commit command](https://github.com/humanlayer/humanlayer/blob/main/.claude/commands/commit.md)  
 _Documentation_: [Claude Code slash commands](https://docs.anthropic.com/en/docs/claude-code/slash-commands)
 
-_Note_: You can customize slash commands by providing metadata in the prompt, I do that only if needed, this let's me migrate away from CC if better tool shows up.
+_Note_: You can customize slash commands by providing metadata in the prompt, I do that only if needed, this lets me migrate away from CC if a better tool shows up.
 
 ---
 
@@ -264,7 +264,8 @@ _Note_: You can customize slash commands by providing metadata in the prompt, I 
 
 **The Concept:** Create specialized commands that work together - the output of one becomes the input of another.
 
-> [!TIP] > **Principle:** Specialized commands should work together - the output of one should be the input of another when that makes sense.
+> [!TIP]
+> **Principle:** Specialized commands should work together - the output of one should be the input of another when that makes sense.
 
 **Example:**
 
@@ -272,7 +273,7 @@ _Note_: You can customize slash commands by providing metadata in the prompt, I 
 2. `/analyze` → takes the specific research output and extracts key insights because it has specific instructions how to handle this template
 
 > [!TIP]
-> Prefer building intuition by creating your own customized workflow rather than copying already done workflow, long term it's about learning the about prompt engineering, context engineering and all the other fancy terms, that's what will make you stand out.
+> Prefer building intuition by creating your own customized workflow rather than copying an already done workflow. Long term, it's about learning prompt engineering, context engineering and all the other fancy terms - that's what will make you stand out.
 
 ---
 
@@ -327,7 +328,8 @@ You are a [specific role with clear expertise area].
 
 ### Tip 7: Provide the right context given the available tools
 
-> [!TIP] > **Principle:** When providing context, format it so the LLM can use its available tools to one-shot access that exact context.
+> [!TIP]
+> **Principle:** When providing context, format it so the LLM can use its available tools to one-shot access that exact context.
 
 **Examples:**
 
@@ -363,7 +365,7 @@ except ValidationError as e:
 - **Repetition leads to attention**: Reading code snippet and then finding that same code in the file system strengthens the focus on those specific parts of the code.
 
 > [!TIP]
-> Repetition is good, when you repeat the correct thing. It focuses the LLM. If something is important repeating it multiple times with different words in different contexts.
+> Repetition is good when you repeat the correct thing. It focuses the LLM. If something is important, repeat it multiple times with different words in different contexts.
 
 ---
 
@@ -387,7 +389,7 @@ except ValidationError as e:
 - Give clear, specific objectives to the subagent
 - **Be explicit about output format:** Define exactly what information should flow between agents
 - **Always include flexibility:** Add `[Any other relevant information given the task and context]` to templates
-- Give the least amount of tools access as possible for the task
+- Give the least amount of tool access as possible for the task
 
 **Example Output Template:**
 
@@ -419,7 +421,7 @@ except ValidationError as e:
 
 **The Principle:** Instead of instructing "always use X instead of Y", configure your environment to automatically prevent incorrect commands and guide the LLM.
 
-**Example:** Always using `uv` when working with python https://pydevtools.com/blog/interceptors/
+**Example:** Always using `uv` when working with Python - https://pydevtools.com/blog/interceptors/
 
 **LLM Self-Correction in Action:**
 
@@ -430,14 +432,13 @@ $ python main.py
 
 $ uv run main.py
 ✅ Running main.py with uv...
-```bash
 $ pip install -r requirements.txt
 ❌ Direct pip usage detected!
 🤖 AI Agent Instructions: Instead of 'pip install -r requirements.txt', use: uv pip sync requirements.txt
 
 $ uv pip sync requirements.txt
 ✅ Syncing dependencies with uv...
-````
+```
 
 ---
 
@@ -516,7 +517,7 @@ jobs:
 - **Test + PR:** Unit tests → User testing → `/commit` → Create PR → Review and Iterate → Merge
 
 > [!TIP]
-> With Speech to text you can review PRs extremely fast by just starting transcription and then scrolling through the pr and going "In auth.ts on line 75 I see you've written ... but actually shouldn't that be ...", "Why did you use package X for task Y, when you could use ...."
+> With speech-to-text you can review PRs extremely fast by just starting transcription and then scrolling through the PR and going "In auth.ts on line 75 I see you've written ... but actually shouldn't that be ...", "Why did you use package X for task Y, when you could use ...."
 
 ---
 
@@ -537,14 +538,14 @@ Don't research while implementing. Don't plan while testing. Don't refactor whil
 **Why:** Mixed tasks create competing attention patterns. Research needs broad exploration, implementation needs narrow focus, testing needs systematic coverage. When you mix them, the LLM's attention mechanisms fight each other, forcing unpredictable prioritization. One task type will win, but you won't know which one until something gets overlooked.
 
 > [!TIP]
-> Aim to build intuition what "1 task" means
+> Aim to build intuition about what "1 task" means
 
 ### Tip 13: Clear context early and often
 
 To generate a response, the LLM tracks relationships between every token pair. At 50 tokens, that's 2,500 relationships. At 50,000 tokens, it's 2.5 billion. Your instructions that once had 2% of the model's attention now get 0.0002% - essentially disappearing.
 
 > [!NOTE]
-> The math above is simplified for illustration. In reality LLMs use smarter attention patterns - they learn what's important, use sliding windows, skip irrelevant parts. The techniques help but also make it unpredictable when exactly your instructions will get ignored since they inherently ensure focus on some tokens by not focusing on other tokens.
+> The math above is simplified for illustration. In reality, LLMs use smarter attention patterns - they learn what's important, use sliding windows, skip irrelevant parts. The techniques help but also make it unpredictable when exactly your instructions will get ignored since they inherently ensure focus on some tokens by not focusing on other tokens.
 
 > [!TIP]
 > When context reaches ±40%, consider using `/progress` to save state, then `/clear` to start fresh while maintaining continuity.
@@ -559,7 +560,7 @@ To generate a response, the LLM tracks relationships between every token pair. A
 > ...
 > ...
 >
-> USER: You didn't ask for permission before commiting
+> USER: You didn't ask for permission before committing
 >
 > CC: You're absolutely right. I should have waited for your confirmation after presenting the commit plan.
 
@@ -567,10 +568,10 @@ To generate a response, the LLM tracks relationships between every token pair. A
 
 **The Problem:** LLMs forget instructions as context grows. Important rules get buried under conversation history.
 
-**The Solution:** Inject system reminders after every user prompt using the `UserPromptSubmit` hook. These reminders appear as high-priority because the model is recency bias, focusing on the latest tokens more than previous ones.
+**The Solution:** Inject system reminders after every user prompt using the `UserPromptSubmit` hook. These reminders appear as high-priority because the model has recency bias, focusing on the latest tokens more than previous ones.
 
 **Example: Step-back analysis reminder**
-Used to decrease the changes of hallucinations by forcing the model to output in the direction of "ARE YOU SURE ABOUT THAT?"
+Used to decrease the chances of hallucinations by forcing the model to output in the direction of "ARE YOU SURE ABOUT THAT?"
 
 Create `~/.claude/hooks/inject_reminder.sh`:
 
@@ -617,13 +618,13 @@ Configure in `~/.claude/settings.json`:
 ```
 
 > [!TIP]
-> Keep reminders concise and actionable. Too many rules dilute focus, leading to the same hallucinations as if the reminder is not there. If you need more rules, better try to think of a solution that provider a dynamic reminder based on the context.
+> Keep reminders concise and actionable. Too many rules dilute focus, leading to the same hallucinations as if the reminder is not there. If you need more rules, better try to think of a solution that provides a dynamic reminder based on the context.
 
 ### Tip 15: Use CLAUDE.md files
 
 By default the `CLAUDE.md` is always sent with each message, best used to provide context of the project goals and folder structure.
 
-If you're a beginner, use the `/init` command to generate `CLAUDE.md` file, if you're commiting regularly to the codebase, delete the `CLAUDE.md` and run `/init`. Don't bother with anything else.
+If you're a beginner, use the `/init` command to generate a `CLAUDE.md` file. If you're committing regularly to the codebase, delete the `CLAUDE.md` and run `/init`. Don't bother with anything else.
 
 > [!TIP]
 > Trust the `/init` slash command from Anthropic's prompt writers.
@@ -631,16 +632,49 @@ If you're a beginner, use the `/init` command to generate `CLAUDE.md` file, if y
 I'd also recommend keeping the user level `CLAUDE.md` empty in the beginning if you're not specifically focused and experimenting with it, it can be quite easy to forget it and just push tokens that will defocus the LLM.
 
 > [!TIP]
-> Repeat system reminders in CLAUDE.md with different wording to increase changes of instruction following and reduce hallucinations. Aim to provide clear, easy-to-follow, non-conflicting instructions. If there are conflicting instructions provide priority
+> Repeat system reminders in CLAUDE.md with different wording to increase chances of instruction following and reduce hallucinations. Aim to provide clear, easy-to-follow, non-conflicting instructions. If there are conflicting instructions, provide priority.
 
-- Repetition with different wording increases changes of instruction following
+- Repetition with different wording increases chances of instruction following
 - CLAUDE.md takes higher priority than normal tokens and is always attached
-- System reminders get send last so they get higher attention due to recency
+- System reminders get sent last so they get higher attention due to recency
 
 ### Tip 16: Use background bash commands for continuous feedback
 
-Ask the LLM to use background bash to run your python api, react frontend etc.
+Ask the LLM to use background bash to run your Python API, React frontend, etc.
 If there is an error, tell it to "Read the bash output for the frontend and check for errors"
+
+---
+
+### Tip 17: Use MCP servers to extend Claude Code's capabilities
+
+MCP (Model Context Protocol) servers let you add specialized tools to Claude Code. They're particularly useful for integrations that would otherwise require complex scripting.
+
+**Examples:**
+- **Playwright MCP:** Browser automation and testing
+- **DeepWiki MCP:** GitHub repository documentation access
+- **Database MCPs:** Direct database interactions without writing SQL
+
+**Setup:**
+1. Install the MCP server: `npx @modelcontextprotocol/server-playwright`
+2. Configure in `~/.claude/mcp_servers.json`:
+```json
+{
+  "playwright": {
+    "command": "npx",
+    "args": ["@modelcontextprotocol/server-playwright"],
+    "disabled": false
+  }
+}
+```
+3. Restart Claude Code to activate
+
+**Why MCP servers over custom tools:**
+- Maintained by the community or vendors
+- Handle complex state management (browser sessions, DB connections)
+- Often provide better error handling and retry logic
+
+> [!TIP]
+> Check [https://github.com/modelcontextprotocol/servers](https://github.com/modelcontextprotocol/servers) for available MCP servers before writing complex custom tools.
 
 ---
 
@@ -650,9 +684,9 @@ If there is an error, tell it to "Read the bash output for the frontend and chec
 
 ## Telegram bot
 
-## python apis for force alignment and sfx generation
+## Python APIs for force alignment and SFX generation
 
-# Tips/ techniques I haven't found that useful
+# Tips/techniques I haven't found that useful
 
 - git worktrees (I feel I need more time mastering one execution flow before going bombastic on the same branch with different but similar tasks)
 
@@ -662,14 +696,14 @@ If there is an error, tell it to "Read the bash output for the frontend and chec
 
 # Links
 
-https://youtu.be/i0P56Pm1Q3U?si=ja8e_JOm0JDyw47l - CC system prompt shown
+- https://youtu.be/i0P56Pm1Q3U?si=ja8e_JOm0JDyw47l - CC system prompt shown
 
-https://pydevtools.com/blog/interceptors/ uv python interceptor
+- https://pydevtools.com/blog/interceptors/ - uv Python interceptor
 
-https://jalammar.github.io/illustrated-transformer/ illustrated explanations on how the transformer architecture works, essentially how LLMs generate their responses. The same author has multiple "illustrated" tutorial, also for stable diffusion for image generation. There's also a 1.5h free course
+- https://jalammar.github.io/illustrated-transformer/ - Illustrated explanations on how the transformer architecture works, essentially how LLMs generate their responses. The same author has multiple "illustrated" tutorials, also for stable diffusion for image generation. There's also a 1.5-hour free course
 
-https://www.youtube.com/watch?v=IS_y40zY-hc - A good talk that digs deeper into the workflow of a few engineers' startup that does a huge amount of code generation, they talk about how they work, the prompts they use are available in the repo, it covers the topic of compacting context, a part of my talk will be about this, as I find it extremely important. They also cover how the do PR reviews (focusing on research and planning documents instead of code, really interesting ideas)
+- https://www.youtube.com/watch?v=IS_y40zY-hc - A good talk that digs deeper into the workflow of a few engineers' startup that does a huge amount of code generation. They talk about how they work, the prompts they use are available in the repo, it covers the topic of compacting context, a part of my talk will be about this, as I find it extremely important. They also cover how they do PR reviews (focusing on research and planning documents instead of code, really interesting ideas)
 
-https://www.youtube.com/watch?v=42AzKZRNhsk - the same topic, from the same people, but more in-depth
+- https://www.youtube.com/watch?v=42AzKZRNhsk - The same topic, from the same people, but more in-depth
 
-https://github.com/humanlayer/humanlayer/tree/main/.claude - their system prompts (worth studying)
+- https://github.com/humanlayer/humanlayer/tree/main/.claude - Their system prompts (worth studying)
