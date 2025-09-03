@@ -428,7 +428,7 @@ $ uv run main.py
 ✅ Running main.py with uv...
 ```
 
-```bash
+<!-- Test commit for branch protection verification -->bash
 $ pip install -r requirements.txt
 ❌ Direct pip usage detected!
 🤖 AI Agent Instructions: Instead of 'pip install -r requirements.txt', use: uv pip sync requirements.txt
@@ -439,10 +439,49 @@ $ uv pip sync requirements.txt
 
 ---
 
+### Tip 10: Block direct pushes and enforce CI checks over prompting
+
+**The Principle:** Instead of instructing "always run tests and linting before committing", configure your repository to automatically enforce these checks.
+
+**Implementation:**
+
+**1. Block direct pushes to main:**
+
+```bash
+echo '{
+  "required_status_checks": {
+    "strict": true,
+    "contexts": []
+  },
+  "enforce_admins": true,
+  "required_pull_request_reviews": {
+    "required_approving_review_count": 1
+  },
+  "restrictions": null
+}' | gh api repos/:owner/:repo/branches/main/protection \
+  --method PUT \
+  --input -
+```
+
+**2. CI Pipeline that runs automatically:**
+
+```yaml
+# .github/workflows/ci.yml
+- Run tests
+- Run linting (eslint, ruff, etc.)
+- Run security checks
+- Run type checking
+```
+
+> [!TIP]
+> This extends the programmatic blocking principle from local commands to repository-level quality gates.
+
+---
+
 # Tips/ techniques I haven't found that useful
 
 - git worktrees (I feel I need more time mastering one execution flow before going bombastic on the same branch with different but similar tasks)
 
 ```
 
-```
+<!-- Test commit for branch protection verification -->
