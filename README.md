@@ -6,10 +6,8 @@ Examples and demos for the "Reducing Friction During Agentic Coding" presentatio
 
 These tips assume:
 
-- **Learning-focused:** You're building for exploration and learning, not mission-critical systems
-- **Solo development:** Working alone, not in a team environment
-- **Experimental freedom:** Goal is understanding technology while building what interests you
-- **Adaptable principles:** If working in teams or production, these techniques need adaptation
+- **Learning-focused:** You're building for exploration and learning, not production systems
+- **Solo development:** Working alone, not in a team environment, if in a team, adapt the tips
 
 ## Claude Code Configuration
 
@@ -368,7 +366,7 @@ except ValidationError as e:
 - **Repetition leads to attention**: Reading code snippet and then finding that same code in the file system strengthens the focus on those specific parts of the code.
 
 > [!TIP]
-> Repetition is good, when you repeat the correct thing.
+> Repetition is good, when you repeat the correct thing. It focuses the LLM. If something is important repeating it multiple times with different words in different contexts.
 
 ---
 
@@ -514,11 +512,14 @@ jobs:
 
 ## Example Development Workflow
 
-- **Feature Overview + Branch:** `cc "Add user authentication"` → `git checkout -b feature/user-auth`
-- **Plan & Research:** `cc "/research auth patterns"` → Write detailed plan → Iterate until approved
-- **Clear Context:** `cc "/progress"` → Fresh conversation
+- **Feature Overview + Branch:** `"Hey Claude, we'll be adding user authentication where..."` → `git checkout -b feature/user-auth`
+- **Plan & Research:** `"Hey Claude, research the codebase for all auth patterns and ..."` → Write detailed plan → Iterate until approved
+- **Clear Context:** `"/progress"` → save to file `docs/progress.md`→ `/clear` for a fresh conversation
 - **Implement:** Focus purely on coding per plan
-- **Test + PR:** Unit tests → User testing → `cc "/commit"` → Create PR → Merge
+- **Test + PR:** Unit tests → User testing → `/commit` → Create PR → Review and Iterate → Merge
+
+> [!TIP]
+> With Speech to text you can review PRs extremely fast by just starting transcription and then scrolling through the pr and going "In auth.ts on line 75 I see you've written ... but actually shouldn't that be ...", "Why did you use package X for task Y, when you could use ...."
 
 ---
 
