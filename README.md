@@ -419,7 +419,7 @@ except ValidationError as e:
 
 **LLM Self-Correction in Action:**
 
-```bash
+````bash
 $ python main.py
 ❌ Direct python usage detected!
 🤖 AI Agent Instructions: Instead of 'python main.py', use: uv run main.py
@@ -433,7 +433,7 @@ $ pip install -r requirements.txt
 
 $ uv pip sync requirements.txt
 ✅ Syncing dependencies with uv...
-```
+````
 
 ---
 
@@ -442,6 +442,7 @@ $ uv pip sync requirements.txt
 **The Principle:** Instead of instructing "always run tests and linting before committing", configure your repository to automatically enforce these checks.
 
 **Enable branch protection:**
+
 ```bash
 echo '{
   "required_status_checks": {
@@ -459,52 +460,63 @@ echo '{
 ```
 
 **Test the blocking:**
+
 ```bash
 git commit -m "Test commit"
 git push origin main
 ```
+
 ```
-remote: error: GH006: Protected branch update failed for refs/heads/main.        
+remote: error: GH006: Protected branch update failed for refs/heads/main.
 remote: - Changes must be made through a pull request.
 error: failed to push some refs
 ```
 
 **Remove protection (if needed):**
+
 ```bash
 gh api repos/:owner/:repo/branches/main/protection --method DELETE
 ```
 
 **CI Pipeline:**
+
 ```yaml
-# .github/workflows/ci.yml  
+# .github/workflows/ci.yml
 name: CI
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   quality-checks:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Random quality check
-      run: |
-        # 50% chance of failure to demo blocking
-        if [ $((RANDOM % 2)) -eq 0 ]; then
-          echo "❌ Quality check failed"
-          exit 1
-        else
-          echo "✅ Quality check passed"
-        fi
+      - uses: actions/checkout@v4
+      - name: Random quality check
+        run: |
+          # 50% chance of failure to demo blocking
+          if [ $((RANDOM % 2)) -eq 0 ]; then
+            echo "❌ Quality check failed"
+            exit 1
+          else
+            echo "✅ Quality check passed"
+          fi
 ```
 
-> [!TIP]
-> This extends the programmatic blocking principle from local commands to repository-level quality gates.
+## Example Development Workflow
+
+- **Feature Overview + Branch:** `cc "Add user authentication"` → `git checkout -b feature/user-auth`
+- **Plan & Research:** `cc "/research auth patterns"` → Write detailed plan → Iterate until approved
+- **Clear Context:** `cc "/progress"` → Fresh conversation
+- **Implement:** Focus purely on coding per plan
+- **Test + PR:** Unit tests → User testing → `cc "/commit"` → Create PR → Merge
 
 ---
 
 # Tips/ techniques I haven't found that useful
 
 - git worktrees (I feel I need more time mastering one execution flow before going bombastic on the same branch with different but similar tasks)
+
+```
 
 ```
