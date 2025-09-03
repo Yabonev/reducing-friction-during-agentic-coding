@@ -263,8 +263,7 @@ _Note_: You can customize slash commands by providing metadata in the prompt, I 
 
 **The Concept:** Create specialized commands that work together - the output of one becomes the input of another.
 
-> [!TIP]
-> **Principle:** Specialized commands should work together - the output of one should be the input of another when that makes sense.
+> [!TIP] > **Principle:** Specialized commands should work together - the output of one should be the input of another when that makes sense.
 
 **Example:**
 
@@ -298,6 +297,8 @@ You are a [specific role with clear expertise area].
 
 [Exact structure expected]
 
+**[Any other relevant information given the task and context you've processed]**
+
 ## Constraints
 
 - [Specific limitation]
@@ -322,8 +323,7 @@ You are a [specific role with clear expertise area].
 
 ### Tip 7: Provide the right context given the available tools
 
-> [!TIP]
-> **Principle:** When providing context, format it so the LLM can use its available tools to one-shot access that exact context.
+> [!TIP] > **Principle:** When providing context, format it so the LLM can use its available tools to one-shot access that exact context.
 
 **Examples:**
 
@@ -331,17 +331,18 @@ You are a [specific role with clear expertise area].
 
 ✅ **Good:** "The authentication logic in `auth.py:45-52` validates users:
 
-````python
+```python
 def validate_user(username, password):
     user = User.query.filter_by(username=username).first()
     if user and user.check_password(password):
         return user
     return None
-```"
+```
 
 ❌ **Bad:** "Error handling in `api/handlers.py` catches validation errors"
 
 ✅ **Good:** "Error handling in `api/handlers.py:123-130` catches validation errors:
+
 ```python
 try:
     result = process_request(data)
@@ -360,8 +361,88 @@ except ValidationError as e:
 > [!TIP]
 > Repetition is good, when you repeat the correct thing.
 
+---
+
+### Tip 8: Use subagents for context isolation, not for creating friends
+
+**The Mindset:** Create subagents when you want to execute a task outside the main agent's context without polluting it with research artifacts.
+
+**Use Cases:**
+
+- **Web research:** Fetch and analyze multiple sources without filling main context with URLs and content
+- **Codebase exploration:** Deep dive into unfamiliar code without bloating main conversation with file contents
+- **Bug investigation:** Trace through logs, stack traces, and error patterns in isolation
+
+**When NOT to use subagents:**
+
+- **Interactive discussions:** If you feel the need to ask some questions after the execution happens, you probably should use slash commands in separate context windows instead
+
+**Implementation:**
+
+- Use default subagent creation (Task tool with appropriate agent type)
+- Give clear, specific objectives to the subagent
+- **Be explicit about output format:** Define exactly what information should flow between agents
+- **Always include flexibility:** Add `[Any other relevant information given the task and context]` to templates
+- Give the least amount of tools access as possible for the task
+
+**Example Output Template:**
+
+```markdown
+## Research Results: [Topic]
+
+**Key Findings:**
+
+- [Finding 1 with source]
+- [Finding 2 with source]
+
+**Recommendations:**
+
+- [Actionable recommendation 1]
+- [Actionable recommendation 2]
+
+**Blockers/Concerns:**
+
+- [Issue 1]
+- [Issue 2]
+
+**[Any other relevant information given the research context and sources analyzed]**
+**[Any other relevant information to further research that might be missing from this research]**
+```
+
+---
+
+### Tip 9: Prefer programmatically blocking execution over prompting for it
+
+**The Principle:** Instead of instructing "always use X instead of Y", configure your environment to automatically prevent incorrect commands and guide the LLM.
+
+**Example:** Always using `uv` when working with python https://pydevtools.com/blog/interceptors/
+
+**LLM Self-Correction in Action:**
+
+```bash
+$ python main.py
+❌ Direct python usage detected!
+🤖 AI Agent Instructions: Instead of 'python main.py', use: uv run main.py
+
+$ uv run main.py
+✅ Running main.py with uv...
+```
+
+```bash
+$ pip install -r requirements.txt
+❌ Direct pip usage detected!
+🤖 AI Agent Instructions: Instead of 'pip install -r requirements.txt', use: uv pip sync requirements.txt
+
+$ uv pip sync requirements.txt
+✅ Syncing dependencies with uv...
+```
+
+---
 
 # Tips/ techniques I haven't found that useful
 
 - git worktrees (I feel I need more time mastering one execution flow before going bombastic on the same branch with different but similar tasks)
-````
+
+```
+
+```
